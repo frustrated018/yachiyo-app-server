@@ -6,7 +6,9 @@ const app = express();
 
 //! Middlewares [Don't know the correct port for expo app]
 app.use(express.json());
-app.use(cors({ origin: ["http://localhost:5173"] }));
+
+//! ISSUE: find all route is timing out....
+app.use(cors({ origin: ["http://localhost:5173", process.env.PROD_ORIGIN] }));
 
 //* Actual DB Related Routes
 
