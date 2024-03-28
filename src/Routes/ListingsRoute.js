@@ -1,12 +1,9 @@
-const findAllListings = require("../Api/Listings/findAllListings");
-const findSpecificData = require("../Api/Listings/findSpecificData");
-
+const findListings = require("../Api/Listings/findListings");
 const router = require("express").Router();
 
-//! Finding all assignments
-router.get("/", findAllListings);
 
-//! Finding specific shit
-router.get("/specific", findSpecificData);
+
+// Find Listings
+router.get('/', findListings)
 
 module.exports = router;

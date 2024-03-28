@@ -1,9 +1,9 @@
 const Listing = require("../../Models/Listing");
 
-
 //TODO: Get the select fields for the query or body of the request and give data based on that
+//TODO: Paginate this data to make this more efficient
 
-const findSpecificData = async (req, res) => {
+const findListings = async (req, res) => {
   try {
     const listings = await Listing.find().select("name summary");
 
@@ -13,4 +13,4 @@ const findSpecificData = async (req, res) => {
   }
 };
 
-module.exports = findSpecificData;
+module.exports = findListings;
