@@ -47,7 +47,7 @@ const findListings = async (req, res) => {
       const listings = result[0];
       listings.metaData = {
         ...listings.metaData[0],
-        count: listings.data.length,
+        documentsPerPage: listings.data.length,
       };
       res.send(listings);
     } else {
