@@ -3,6 +3,8 @@ const Listing = require("../../Models/Listing");
 const findListings = async (req, res) => {
   let { page, limit } = req.query;
 
+  //TODO: Add a filter to sort the data by category or in this case Room type
+
   page = parseInt(page) || 1;
   limit = parseInt(limit) || 10;
 
