@@ -1,14 +1,41 @@
 const Listing = require("../../Models/Listing");
 
 const findListings = async (req, res) => {
-  let { page, limit } = req.query;
+  let { page, limit, property_type } = req.query;
 
-  //TODO: Add a filter to sort the data by category or in this case Room type
+  // Default property type filter to "Apartment" if not provided
+  // Converting the string to "String"
+  property_type =
+    property_type.charAt(0).toUpperCase() + property_type.slice(1) ||
+    "Apartment";
 
+  // Default values if not provided
   page = parseInt(page) || 1;
   limit = parseInt(limit) || 10;
 
   try {
+    // Filtering by Property Type
+    let matchQuery;
+    if (property_type.toLowerCase() === "special") {
+      matchQuery = {
+        property_type: {
+          $in: [
+            "Serviced apartment",
+            "Cabin",
+            "Bungalow",
+            "Other",
+            "Townhouse",
+          ],
+        },
+      };
+    } else {
+      matchQuery = {
+        property_type: property_type,
+      };
+    }
+
+    console.log(matchQuery);
+
     const result = await Listing.aggregate([
       {
         $facet: {
@@ -25,8 +52,12 @@ const findListings = async (req, res) => {
           ],
           data: [
             {
+              $match: matchQuery,
+            },
+            {
               $project: {
                 name: 1,
+                property_type: 1,
                 medium_url: 1,
                 review_scores_rating: 1,
                 room_type: 1,
