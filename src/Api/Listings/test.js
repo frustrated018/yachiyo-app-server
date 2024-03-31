@@ -1,10 +1,23 @@
 const Listing = require("../../Models/Listing");
 
 const testingShit = async (req, res) => {
-  try {
-    const result = await Listing.find().select("name");
+  const { property_type } = req.query;
 
-    res.send(`Total documents ${result.length}`);
+  try {
+    const result = await Listing.aggregate([
+      {
+        $project: {
+          property_type: 1,
+        },
+      },
+      {
+        $match: {
+          property_type: property_type,
+        },
+      },
+    ]);
+
+    res.status(200).send(`Total number of ${property_type} ` + result.length);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
