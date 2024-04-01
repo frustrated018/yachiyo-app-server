@@ -1,6 +1,9 @@
 const Listing = require("../../Models/Listing");
 
 const findListings = async (req, res) => {
+  //TODO: Update metadeta to contain the total from the property match
+  //! ISSUE : The vercel server crashes if the query is missing even though i set the default values
+
   let { page, limit, property_type } = req.query;
 
   // Default property type filter to "Apartment" if not provided
